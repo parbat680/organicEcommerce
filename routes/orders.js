@@ -3,9 +3,9 @@ const express = require('express')
 var router = express.Router();
 const { verify } = require('../middleware/jwt_token');
 const { response } = require('express');
-const { validate } = require('../models/usermodel');
-const product = require('../models/product');
-const order= require('../models/orders');
+const { validate } = require('../schemas/user');
+const product = require('../schemas/product');
+const order= require('../schemas/orders');
 const { reset } = require('nodemon');
 
 

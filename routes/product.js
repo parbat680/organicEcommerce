@@ -1,6 +1,6 @@
 const express = require('express')
-const product = require('../models/product')
-const category= require('../models/category')
+const product = require('../schemas/product')
+const category= require('../schemas/category')
 var router = express.Router();
 const { verify } = require('../middleware/jwt_token');
 const { response } = require('express');

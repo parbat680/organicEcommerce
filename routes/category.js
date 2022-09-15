@@ -1,5 +1,5 @@
 const express = require('express')
-const category = require('../models/category')
+const category = require('../schemas/category')
 var router = express.Router();
 const { verify } = require('../middleware/jwt_token')
 

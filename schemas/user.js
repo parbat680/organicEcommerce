@@ -30,3 +30,5 @@ const user= mongoose.Schema({
     }],
 
 })
+
+module.exports= user;
