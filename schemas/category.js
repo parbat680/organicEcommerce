@@ -1,17 +1,17 @@
 const mongoose= require('mongoose')
 
 const category=mongoose.Schema({
-    category_name: {
+    name: {
         required: true,
         unique: true,
         type: String,
     },
-    category_description: {
+    description: {
         required: true,
         type: String,
 
     },
-    category_avatar:{
+    avatar:{
         
         type: String,
         default: null,
