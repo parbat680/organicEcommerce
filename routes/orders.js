@@ -13,14 +13,20 @@ const { reset } = require('nodemon');
 router.use(verify)
 
 router.get('/get',async (req,res)=> {
+    if(req.user.userEmail != req.body.email){
+        res.status(400).send({message: 'User Email is not valid'})
+        return;
+    }
     try {
-        var data = await order.find({buyerPhone: req.body.phone}).populate({path: 'product',populate:{
+        
+        var data = await order.find({buyerEmail: req.body.email}).populate({path: ('product'),select:'-quantity',populate:{
             path: 'category',
         }})
-
+    
     res.status(200).send(data)
     } catch (error) {
-        res.status(500).send({message: 'Error Occured'})
+        
+        res.status(500).send({message: error.message})
     }
 })
 
@@ -34,7 +40,7 @@ router.post('/add',async(req,res)=> {
         var data=new order({
             product: prod._id,
             quantity: req.body.quantity,
-            buyerPhone: req.body.phone,
+            buyerEmail: req.body.email,
         })
 
         var saved= await data.save();
@@ -42,7 +48,7 @@ router.post('/add',async(req,res)=> {
         res.status(200).send(saved);
 
     } catch (error) {
-        res.status(500).send({message: 'Error Occured'})
+        res.status(500).send({message: error.message})
     }
 })
 

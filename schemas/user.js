@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const user= mongoose.Schema({
+const user= new mongoose.Schema({
     userName: {
         type: String,
         required : true,
@@ -16,7 +16,7 @@ const user= mongoose.Schema({
     },
     avatar: {
         type: String,
-        required : true,
+       
         default: "",
     },
     created_on: {
@@ -31,4 +31,4 @@ const user= mongoose.Schema({
 
 })
 
-module.exports= user;
+module.exports= mongoose.model('user',user);

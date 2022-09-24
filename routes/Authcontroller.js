@@ -40,7 +40,7 @@ router.patch('/patch/:id',async (req,res)=> {
 })
 
 router.post('/register',async (req,res) =>  {
-    var salt =await bcrypt.genSaltSync(10);
+    var salt = bcrypt.genSaltSync(10);
     req.body.password=await  bcrypt.hash(req.body.password,salt)
     
     const data= new user({
@@ -63,7 +63,7 @@ router.post('/register',async (req,res) =>  {
         });
 
     } catch (error) {
-        res.status(400).json({message: 'Cannot create user'})
+        res.status(400).json({message: error.message})
     }
 })
 

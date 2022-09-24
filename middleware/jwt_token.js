@@ -1,7 +1,8 @@
 const jwt = require ('jsonwebtoken')
+const user= require('../schemas/user')
 require('dotenv').config()
 
-exports.verify= function(req,res,next){
+exports.verify=  async function(req,res,next) {
     let token= req.header('token');
 
     if(!token){
@@ -15,6 +16,8 @@ exports.verify= function(req,res,next){
         payload= jwt.verify(token,process.env.JWT_SECRET);
         
         req.id= payload.id;
+        req.user= await user.findOne({_id:req.id});
+        
         next();
 
     } catch (error) {

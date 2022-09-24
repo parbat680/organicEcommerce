@@ -22,9 +22,21 @@ router.get('/get',async (req,res)=>{
     }
 })
 
+router.get('/get/:_id',async (req,res)=>{
+    try{
+         var data= await product.findOne({_id:req.params._id}).populate('category')
+         if(data)
+             res.status(200).send(data)
+         else res.status(400).send({message:error.message})
+    }
+     catch (error) {
+         res.status(500).send({message:error.message})
+     }
+ })
+
 router.post('/add',upload.array('images'),async (req,res)=> {
     try {
-        var cat= await category.findOne({category_name:req.body.category_name})
+        var cat= await category.findOne({category_name:req.body.category})
         if(!cat){
             res.status(400).send({message: "Error Occured"})
             res.end();
@@ -32,8 +44,8 @@ router.post('/add',upload.array('images'),async (req,res)=> {
         let images=[]
         
         var data= new product({
-            product_name: req.body.product_name,
-            product_description: req.body.product_description,
+            name: req.body.name,
+            description: req.body.description,
             category: cat._id,
             price: req.body.price,
             quantity: req.body.quantity,
@@ -50,7 +62,7 @@ router.post('/add',upload.array('images'),async (req,res)=> {
         else res.status(400).send({message: "Error Occured"})
 
     } catch (error) {
-        res.status(500).send({message: "Error Occured",error:error})
+        res.status(500).send({message:error.message})
     }
 })
 

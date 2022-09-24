@@ -1,15 +1,16 @@
 const express = require('express')
 const category = require('../schemas/category')
 var router = express.Router();
+const {upload}= require('./multer')
 const { verify } = require('../middleware/jwt_token')
 
 router.use(verify)
 
-router.post('/add', async (req, res) => {
+router.post('/add', upload.single('img'),async (req, res) => {
     var data = category({
-        category_name: req.body.category_name,
-        category_description: req.body.category_description,
-        category_avatar: req.body.category_avatar
+        name: req.body.name,
+        description: req.body.description,
+        avatar: req.body.avatar
     })
 
     try {
@@ -20,7 +21,7 @@ router.post('/add', async (req, res) => {
         else res.status(200).send({ category: result })
 
     } catch (error) {
-        res.status(500).send({ message: error })
+        res.status(500).send({ message: error.message })
     }
 })
 
