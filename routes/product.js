@@ -14,11 +14,11 @@ router.get('/get',async (req,res)=>{
    try{
         var data= await product.find().populate('category')
         if(data)
-            res.status(200).send(data)
-        else res.status(400).send({message:"Error Occured",error:error})
+        return res.status(200).send(data)
+        else return res.status(400).send({message:error.message})
    }
     catch (error) {
-        res.status(500).send({message: "Error Occured",error:error})
+        return res.status(500).send({message:error.message})
     }
 })
 
@@ -26,11 +26,11 @@ router.get('/get/:_id',async (req,res)=>{
     try{
          var data= await product.findOne({_id:req.params._id}).populate('category')
          if(data)
-             res.status(200).send(data)
-         else res.status(400).send({message:error.message})
+         return res.status(200).send(data)
+         else return res.status(400).send({message:error.message})
     }
      catch (error) {
-         res.status(500).send({message:error.message})
+        return res.status(500).send({message:error.message})
      }
  })
 
@@ -38,8 +38,8 @@ router.post('/add',upload.array('images'),async (req,res)=> {
     try {
         var cat= await category.findOne({category_name:req.body.category})
         if(!cat){
-            res.status(400).send({message: "Error Occured"})
-            res.end();
+            return res.status(400).send({message: "Error Occured"})
+            
         }
         let images=[]
         
@@ -57,12 +57,12 @@ router.post('/add',upload.array('images'),async (req,res)=> {
 
         var result= await data.save();
         if(result)
-            res.send(result)
+        return res.send(result)
         
-        else res.status(400).send({message: "Error Occured"})
+        else  return res.status(400).send({message: "Error Occured"})
 
     } catch (error) {
-        res.status(500).send({message:error.message})
+        return res.status(500).send({message:error.message})
     }
 })
 

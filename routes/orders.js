@@ -14,8 +14,8 @@ router.use(verify)
 
 router.get('/get',async (req,res)=> {
     if(req.user.userEmail != req.body.email){
-        res.status(400).send({message: 'User Email is not valid'})
-        return;
+       return res.status(400).send({message: 'User Email is not valid'})
+       
     }
     try {
         
@@ -23,10 +23,10 @@ router.get('/get',async (req,res)=> {
             path: 'category',
         }})
     
-    res.status(200).send(data)
+    return res.status(200).send(data)
     } catch (error) {
         
-        res.status(500).send({message: error.message})
+        return res.status(500).send({message: error.message})
     }
 })
 
@@ -34,8 +34,8 @@ router.post('/add',async(req,res)=> {
     try {
         var prod=await product.findById(req.body.product)
         if(!prod){
-            res.status(400).send({message: 'cannot find product'})
-            return;
+            return res.status(400).send({message: 'cannot find product'})
+            
         }
         var data=new order({
             product: prod._id,
@@ -45,10 +45,10 @@ router.post('/add',async(req,res)=> {
 
         var saved= await data.save();
 
-        res.status(200).send(saved);
+        return res.status(200).send(saved);
 
     } catch (error) {
-        res.status(500).send({message: error.message})
+        return res.status(500).send({message: error.message})
     }
 })
 

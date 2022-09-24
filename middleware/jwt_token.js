@@ -21,7 +21,7 @@ exports.verify=  async function(req,res,next) {
         next();
 
     } catch (error) {
-        res.status(401).send({message: 'Token Not valid'})
+        return res.status(401).send({message: 'Token Not valid'})
     }
 }
 

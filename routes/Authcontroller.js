@@ -57,13 +57,13 @@ router.post('/register',async (req,res) =>  {
         });
         await data.save();
         
-        res.status(200).json({
+        return res.status(200).json({
             message : 'user created successfully',
             token : token
         });
 
     } catch (error) {
-        res.status(400).json({message: error.message})
+        return res.status(400).json({message: error.message})
     }
 })
 
@@ -71,23 +71,23 @@ router.delete('/delete/:id',verify, async (req,res)=> {
     try {
         const id = req.params.id
         const result= await user.findByIdAndDelete(id) 
-        res.json({'message': 'deleted'})
+        return res.json({'message': 'deleted'})
     } catch (error) {
-        res.status(400).send('User not deleted')
+        return res.status(400).send('User not deleted')
     }
 })
 
 router.post('/login',async(req,res)=> {
     
     user.findOne({userEmail:req.body.userEmail},async(err,user)=> {
-        if (err) res.status(400).send(err);
+        if (err) return res.status(400).send(err);
         
         var validpass= await bcrypt.compare(req.body.password,user.password)
         if (validpass){
         var token= jwt.sign({id: user._id},process.env.JWT_SECRET,{
             expiresIn: 86400,
         });
-            res.status(200).send(
+        return res.status(200).send(
                 {
                 message:'login sucessfully',
                 token: token,
@@ -96,7 +96,7 @@ router.post('/login',async(req,res)=> {
             )
         }
         else{
-        res.status(401).send({message:'invalid credentials'})
+            return res.status(401).send({message:'invalid credentials'})
         }
 
     })

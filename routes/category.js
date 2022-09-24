@@ -16,12 +16,12 @@ router.post('/add', upload.single('img'),async (req, res) => {
     try {
         var result = await data.save();
         if (!result)
-            res.status(400).send({ message: 'category not added' })
+        return res.status(400).send({ message: 'category not added' })
 
-        else res.status(200).send({ category: result })
+        else return res.status(200).send({ category: result })
 
     } catch (error) {
-        res.status(500).send({ message: error.message })
+        return res.status(500).send({ message: error.message })
     }
 })
 
@@ -29,9 +29,9 @@ router.get('/get', async (req, res) => {
     try {
         var data = await category.find();
 
-        res.status(200).send(data);
+        return res.status(200).send(data);
     } catch (error) {
-        res.status(400).send({ message: 'Error Occured', error: error })
+        return res.status(400).send({ message: 'Error Occured', error: error })
     }
 
 })
