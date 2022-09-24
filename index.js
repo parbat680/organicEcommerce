@@ -16,7 +16,7 @@ app.use('/user',auth_routes);
 app.use('/category',category_routes)
 app.use('/product',product_routes)
 app.use('/order',order_routes)
-app.use('/api',multer);
+app.use('/api',multer.router);
 
 app.get('/',(req,res)=> {
     res.send('Welcome to Organic Ecommerce')

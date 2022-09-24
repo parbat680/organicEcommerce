@@ -40,7 +40,7 @@ router.post('/add',upload.array('images'),async (req,res)=> {
             
         })
         for(i=0;i<req.files.length;i++){
-            data.images.push();
+            data.images.push('https://organice-commerce.herokuapp.com/api/'+req.files[i].filename);
         }
 
         var result= await data.save();
