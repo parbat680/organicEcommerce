@@ -79,7 +79,7 @@ router.delete('/delete/:id',verify, async (req,res)=> {
 
 router.post('/login',async(req,res)=> {
     
-    user.findOne({userEmail:req.body.userEmail},async(err,user)=> {
+    user.findOne({userEmail:req.body.email},async(err,user)=> {
         if (err) return res.status(400).send(err);
         
         var validpass= await bcrypt.compare(req.body.password,user.password)
