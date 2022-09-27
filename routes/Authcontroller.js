@@ -91,7 +91,7 @@ router.post('/login',async(req,res)=> {
                 {
                 message:'login sucessfully',
                 token: token,
-                user: user.select('-password'),
+                user: user,
                 }
             )
         }

@@ -2,11 +2,9 @@ const express = require('express')
 
 var router = express.Router();
 const { verify } = require('../middleware/jwt_token');
-const { response } = require('express');
-const { validate } = require('../schemas/user');
 const product = require('../schemas/product');
 const order= require('../schemas/orders');
-const { reset } = require('nodemon');
+
 
 
 
@@ -23,7 +21,7 @@ router.get('/get',async (req,res)=> {
             path: 'category',
         }})
     
-    return res.status(200).send(data)
+    return res.send(data)
     } catch (error) {
         
         return res.status(500).send({message: error.message})
