@@ -32,17 +32,24 @@ router.post('/add',async(req,res)=> {
     try {
         var prod=await product.findById(req.body.product)
         if(!prod){
-            return res.status(400).send({message: 'cannot find product'})
-            
+            return res.status(400).send({message: 'cannot find product'})  
         }
+       console.log(req.user)
         var data=new order({
             product: prod._id,
             quantity: req.body.quantity,
-            buyerEmail: req.body.email,
+            buyerEmail: req.user.userEmail,
         })
 
         var saved= await data.save();
+        product.findByIdAndUpdate(saved.product,{$inc:{quantity:-saved.quantity}},function (err,result){
+            if(err){
+                order.remove(_id= saved._id);
+                
+            }
+            
 
+        })
         return res.status(200).send(saved);
 
     } catch (error) {

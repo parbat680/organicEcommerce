@@ -32,10 +32,10 @@ router.patch('/patch/:id',async (req,res)=> {
         const result=await  user.findByIdAndUpdate(
             id,body,options
         );
-        res.status(200).send(result);
+       return res.status(200).send(result);
 
     } catch (error) {
-        res.status(400).json(error)
+       return res.status(400).json(error)
     }
 })
 
