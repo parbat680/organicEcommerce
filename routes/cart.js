@@ -3,6 +3,7 @@ var router = express.Router();
 const { verify } = require('../middleware/jwt_token');
 const product = require('../schemas/product');
 const cart= require('../schemas/cart')
+const order= require('../schemas/orders')
 
 router.use(verify)
 
@@ -59,6 +60,34 @@ router.delete('/delete',async(req,res)=> {
         
     } catch (error) {
         return res.send({message: error})
+    }
+})
+
+router.post('/checkout', async (req,res)=> {
+    try {
+        var items=[];
+        for (var i=0;i<req.body.product.length;i++){
+            let item= new order({
+                product: req.body.product[i],
+                quantity: req.body.quantity[i],
+                buyerEmail: req.user.userEmail
+            })
+            cart.deleteOne({product: req.body.product[i]},(err,result)=>{
+                if(err){
+                   throw err
+                }
+            })
+            items.push(item)
+        }
+
+         const saved=await  order.insertMany(items);
+
+         return res.send({message: saved})
+
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({message:"Error Occured"})
     }
 })
 
