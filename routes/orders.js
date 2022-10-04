@@ -42,7 +42,7 @@ router.post('/add',async(req,res)=> {
         })
 
         var saved= await data.save();
-        product.findByIdAndUpdate(saved.product,{$inc:{quantity:-saved.quantity}},function (err,result){
+         product.findByIdAndUpdate(saved.product,{$inc:{quantity:-saved.quantity}},function (err,result){
             if(err){
                 order.remove(_id= saved._id);
                 
