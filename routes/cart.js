@@ -36,7 +36,7 @@ router.get('/get',async(req,res)=> {
 
     try {
         
-        var data=await cart.find({buyerEmail: req.user.userEmail}).populate({path: "product", select: "-quantity -_id"});
+        var data=await cart.find({buyerEmail: req.user.userEmail}).populate({path: "product", select: "-quantity"});
 
         return res.send({message:data})
 
