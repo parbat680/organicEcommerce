@@ -12,7 +12,7 @@ router.use(verify)
 
 router.get('/get',async (req,res)=>{
    try{
-        var data= await product.find().populate('category')
+        var data= await product.find().limit(4).populate('category')
         if(data)
         return res.status(200).send(data)
         else return res.status(400).send({message:error.message})
@@ -21,6 +21,18 @@ router.get('/get',async (req,res)=>{
         return res.status(500).send({message:error.message})
     }
 })
+
+router.get('/get/all',async (req,res)=>{
+    try{
+         var data= await product.find().populate('category')
+         if(data)
+         return res.status(200).send(data)
+         else return res.status(400).send({message:error.message})
+    }
+     catch (error) {
+         return res.status(500).send({message:error.message})
+     }
+ })
 
 router.get('/get/:_id',async (req,res)=>{
     try{
