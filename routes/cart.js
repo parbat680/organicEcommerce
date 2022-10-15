@@ -49,12 +49,14 @@ router.get('/get',async(req,res)=> {
 router.delete('/delete',async(req,res)=> {
     try {
 
-         cart.deleteOne({_id: req.body.cart_id},(err,result)=>{
+         cart.deleteOne({_id: req.body.cart_id},async(err,result)=>{
             if(err){
                throw err
             }
             else
-            res.send(result)
+            var data=await cart.find({buyerEmail: req.user.userEmail}).populate({path: "product", select: "-quantity"});
+
+            return res.send({message:data})
         })
 
         
