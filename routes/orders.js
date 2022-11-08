@@ -11,13 +11,10 @@ const order= require('../schemas/orders');
 router.use(verify)
 
 router.get('/get',async (req,res)=> {
-    if(req.user.userEmail != req.body.email){
-       return res.status(400).send({message: 'User Email is not valid'})
-       
-    }
+    
     try {
         
-        var data = await order.find({buyerEmail: req.body.email}).populate({path: ('product'),select:'-quantity',populate:{
+        var data = await order.find({buyerEmail: req.user.userEmail}).populate({path: ('product'),select:'-quantity',populate:{
             path: 'category',
         }})
     
