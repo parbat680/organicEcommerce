@@ -36,6 +36,7 @@ router.post('/add',async(req,res)=> {
             product: prod._id,
             quantity: req.body.quantity,
             buyerEmail: req.user.userEmail,
+            address: req.body.address,
         })
 
         var saved= await data.save();
