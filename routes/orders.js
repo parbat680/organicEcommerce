@@ -14,11 +14,22 @@ router.get('/get',async (req,res)=> {
     
     try {
         
+        if(req.user.userEmail==="admin@gmail.com"){
+            var data = await order.find().populate({path: ('product'),select:'-quantity',populate:{
+            path: 'category',
+        }})
+            return res.send(data)
+        }
+        
+        else{
+        
         var data = await order.find({buyerEmail: req.user.userEmail}).populate({path: ('product'),select:'-quantity',populate:{
             path: 'category',
         }})
     
     return res.send(data)
+        }
+        
     } catch (error) {
         
         return res.status(500).send({message: error.message})
