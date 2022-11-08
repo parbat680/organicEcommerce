@@ -15,6 +15,11 @@ const model= mongoose.Schema({
         required : true,
         type: String
     },
+    
+    address : {
+        required : true,
+        type: String
+    },
 
 
 })
