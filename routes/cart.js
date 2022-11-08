@@ -18,6 +18,7 @@ router.post('/add',async(req,res)=> {
             product: req.body.product,
             quantity: req.body.quantity,
             buyerEmail: req.user.userEmail,
+            address: req.body.adress,
         })
 
         const saved= await data.save();
@@ -72,7 +73,8 @@ router.post('/checkout', async (req,res)=> {
             let item= new order({
                 product: req.body.product[i],
                 quantity: req.body.quantity[i],
-                buyerEmail: req.user.userEmail
+                buyerEmail: req.user.userEmail,
+                address: req.body.adress,
             })
             cart.deleteOne({product: req.body.product[i]},(err,result)=>{
                 if(err){
